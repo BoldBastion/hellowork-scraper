@@ -1,131 +1,80 @@
-[Hellowork Scraper](https://apify.com/lexis-solutions/hellowork-scraper?fpr=data)
+[Hellowork Scraper](https://apify.com/dltik/hellowork-scraper?fpr=data)
 
-# HelloWork Jobs Scraper
+# HelloWork Scraper — French Job Board API (800K+ Active Offers)
 
-![banner](https://images.apifyusercontent.com/7sqi5O5HCrA2AK4rNJlu01iiJ7QEbPlf-JbkRyWRtHM/w:1800/cb:1/aHR0cHM6Ly9sZXhpcy1zb2x1dGlvbnMtYXBpZnkuZnJhMS5jZG4uZGlnaXRhbG9jZWFuc3BhY2VzLmNvbS9iYW5uZXJzL2hlbGxvd29yay5wbmc.webp)
+> Scrape **HelloWork.com**, France's #1 private job board with 800K+ active offers. Filter by keyword, city, contract type, salary range, remote policy. Get title, company, location, contract (CDI/CDD/alternance/stage), salary, remote, full description, posted date. HTTP-only, **$0.001 per job** ($1 per 1,000).
 
-👋 Welcome to the HelloWork Scraper, an actor designed to help you gather job listings from HelloWork! With this actor, you can easily search for job listings based on various criteria, including job query and location.
+⭐ **Bookmark this HelloWork Scraper** — Apify ranks actors by bookmarks, so it directly helps the visibility of this scraper on the Apify Store.
 
-## Introduction
+## What is the HelloWork Scraper?
 
-The HelloWork Scraper is a web scraping tool designed to extract job listings from HelloWork. It was created to make it easier for job seekers and recruiters to find relevant job postings and make data-driven decisions based on the extracted information.
+The **HelloWork Scraper** is an Apify actor that pulls live job offers from [HelloWork](https://www.hellowork.com/) — France's largest private job board, generally complementary to France Travail (which is public). HelloWork hosts 800K+ active offers across all sectors, contract types, and seniority levels. This scraper accepts complex filters (keyword, city, contract, salary, remote) and returns structured JSON with title, company, full description, salary range, posted date, application URL.
 
-## Use Cases
+No HelloWork account, no OAuth, no quota. Pure HTTP scraping with stealth headers.
 
-Here are some typical scenarios in which the HelloWork Scraper can be useful:
+## Use cases
 
-- **Job seekers** can use the scraper to find job listings that match their skills and experience.
-- **Recruiters** can use the scraper to monitor the job market and stay up-to-date on the latest job openings.
-- **Researchers** can use the scraper to gather data on job trends and analyze the job market.
+- **ATS feeders / job aggregators** — auto-import filtered HelloWork offers into your platform daily.
+- **Salary benchmarking** — aggregate `data engineer Paris CDI` salaries across HelloWork to inform your comp band.
+- **Recruitment intelligence** — track who's posting which roles in your competitive landscape.
+- **Niche job board** — build a sector-specific job board (e.g., construction jobs in Auvergne) on top of HelloWork.
+- **Career-services bots** — daily Telegram alert with new HelloWork jobs matching a candidate profile.
+- **Labor-market analytics** — count open positions per region per sector over time.
 
-## Input 📥
-
-To use this actor, you need to provide the following input:
-
-- Field: **startUrls**
-
-- Type: array
-- Required: No
-- Description: List of job URLs to scrape
-- Field: **query**
-
-- Type: string
-- Required: No
-- Description: The keyword(s) for the job you're looking for
-- Field: **location**
-
-- Type: string
-- Required: No
-- Description: The location of the job you're looking for
-- Fiels: **maxItems**
-
-- Type: number
-- Required: No
-- Description: The maximum number of job listings to scrape
-
-Note: Either `query` or `startUrls` must be provided. If both fields are falsey, the actor will throw an error.
-
-## Output 📤
-
-An example output looks like this:
+## Input
 
 ```
 {
-  "id": "2346882/15712312 SLSE7SI/75P",
-  "companyName": "L2C Recrutement",
-  "companyLogo": "https://f.hellowork.com/img/entreprises/160_160/102762.png",
-  "companyLink": "https://www.hellowork.com/fr-fr/entreprises/l2c-recrutement-102762.html",
-  "title": "Senior Lead Software Engineer - 70 - 80K€ Société Internationale H/F",
-  "descriptionHtml": "<h2>Détail du poste</h2><p>CLIENT<br /><br />Créateur de nouvelles solutions innovantes pour des grands groupes, des organisations et des start-up, notre client s'est imposé depuis 20 ans comme une référence majeure au sein de l'écosystème numérique Français.<br /><br />Cette société internationale de 300 collaborateurs, résolument tournée vers la tech, en perpétuel mouvement, est expert dans le conseil en transformation numérique et la création de beaux produits tech sur mesure.<br /><br />...",
-  "url": "https://www.hellowork.com/fr-fr/emplois/52202814.html",
-  "datePosted": "2024-08-18T22:20:08Z",
-  "validThrough": "2024-09-17T22:20:08Z",
-  "employmentType": "FULL_TIME",
-  "jobLocationType": "TELECOMMUTE",
-  "jobLocation": "Paris",
-  "country": "FR",
-  "industry": ["Secteur informatique", "ESN"],
-  "directApply": true,
-  "qualificationsHtml": "Vous avez une connaissance avancée des sujets de développement et d'architecture logicielle, des designs patterns d'architecture (SAGA, SideCar, Aggregator, CQRS...)"
+  "keywords": "developer python",
+  "city": "Paris",
+  "contractTypes": ["CDI", "Freelance"],
+  "salaryMin": 45000,
+  "remote": "remote_friendly",
+  "limit": 200
 }
 ```
 
-## How many job listings can the HelloWork Scraper extract?
+## Output
 
-The HelloWork Scraper uses pagination to extract all job listings from HelloWork. You can control the number of job listings to scrape by setting the `maxItems` input parameter. If you don't set the `maxItems` parameter, the scraper will extract all job listings available on the website.
+```
+{
+  "id": "HW-EXAMPLE-12345",
+  "title": "Développeur Python Senior H/F",
+  "company": "Example Corp",
+  "city": "Paris 9e",
+  "contract_type": "CDI",
+  "salary_min_eur": 55000,
+  "salary_max_eur": 70000,
+  "remote_policy": "remote_friendly",
+  "experience_required": "3-5 ans",
+  "description": "Full job description text...",
+  "apply_url": "https://www.hellowork.com/fr-fr/emplois/example.html",
+  "posted_date": "2026-04-29"
+}
+```
 
-## Why use the HelloWork Scraper?
+## Pricing
 
-- ⚡️ **Fast** - The scraper is fast and efficient, allowing you to scrape job posts in a programmatic way.
-- 🤙 **Easy to use** - The scraper is easy to use and requires no coding knowledge. All you need to do is input the query you want to scrape and the scraper will do the rest.
-- ☑️ **Well-Maintained** - The scraper is maintained by the Lexis Solutions team, ensuring that it is always up-to-date and working properly.
+**PAY_PER_EVENT — $0.001 per job** (= $1 per 1,000). Failed runs not charged.
 
-## FAQ 💬
+## FAQ — HelloWork API alternatives
 
-- **What is HelloWork?**
+**HelloWork official API?** HelloWork doesn't expose a public job-search API. This scraper is the way to get bulk data.
 
-HelloWork is job site popular in France that allows job seekers to search for job listings and apply for positions online. It also provides tools for employers to post job openings and manage applications.
-- **How can I find jobs on HelloWork?**
+**Does it cover both `hellowork.com` and the legacy `regionsjob.com`?** Yes — they merged into HelloWork; this scraper queries the unified search.
 
-You can find jobs on HelloWork by visiting the website and using the search function to look for job listings that match your criteria. The HelloWork scraper automates this process by extracting job listings based on the criteria you specify in the input.
-- **Can I use the HelloWork scraper to apply for jobs?**
+**Salary fields are often missing — why?** ~40% of French job postings don't show salary publicly. We populate `salary_min_eur` / `salary_max_eur` only when the offer states them explicitly.
 
-No, the HelloWork scraper is intended for data extraction and analysis purposes only. It should not be used to apply for jobs or otherwise interact with HelloWork's website.
-- **What types of jobs can the HelloWork scraper find?**
-
-The HelloWork scraper can find any job posted on HelloWork that matches the criteria you specify in the input.
-- **What if the website changes?**
-
-It is possible that changes to the website's structure or code may break the scraper. In this case, the scraper will need to be updated to reflect the changes in order to continue working properly. It is important to regularly monitor the website for any changes that may impact the scraper's functionality and update it as needed.
-
-## Need to scrape other job boards in Europe?
-
-- UK 🇬🇧
-
-- [Reed.co.uk Scraper](https://apify.com/lexis-solutions/reed-co-uk-scraper)
-- [TotalJobs Scraper](https://apify.com/lexis-solutions/totaljobs-scraper)
-- Germany 🇩🇪
-
-- [Arbeitsagentur Scraper](https://apify.com/lexis-solutions/bundesagentur-fur-arbeit-arbeitsagentur-scraper)
-- Netherlands 🇳🇱
-
-- [Werk.nl Scraper](https://apify.com/lexis-solutions/werk-nl-scraper)
-- Sweden 🇸🇪
-
-- [Arbetsformedlingen Scraper](https://apify.com/lexis-solutions/arbetsformedlingen-se-scraper)
+**Compatible with HelloWork's `cabinet de recrutement` listings?** Yes — both direct-employer and recruitment-agency offers are returned, distinguished by the `is_agency` flag.
 
 ---
 
-👀 p.s.
+⭐ **Found this useful? Bookmark this HelloWork Scraper** — it's the strongest signal for Apify Store ranking.
 
-Got feedback or need an extension?
+### Related actors
 
-Lexis Solutions is a [certified Apify Partner](https://apify.com/partners/find). We can help you with custom solutions or data extraction projects.
+- [France Travail Scraper](https://apify.com/dltik/francetravail-scraper) — France's largest public job board (700K+ offers)
+- [Welcome to the Jungle Scraper](https://apify.com/dltik/welcome-to-the-jungle-scraper) — tech-focused FR/EU jobs
+- [JobTeaser Scraper](https://apify.com/dltik/jobteaser-scraper) — student jobs, internships, alternance
 
-Contact us over [Email](mailto:scraping@lexis.solutions) or [LinkedIn](https://www.linkedin.com/company/lexis-solutions)
-
-## Support Our Work 💝
-
-If you're happy with our work and scrapers, you're welcome to leave us a company review [here](https://apify.com/partners/find/lexis-solutions/review) and leave a review for the scrapers you're subscribed to. It will take you less than a minute but it will mean a lot to us!
-
-Image Credit: [https://www.hellowork.com/fr-fr/](https://www.hellowork.com/fr-fr/)
+License: MIT · Author: [dltik](https://apify.com/dltik)
